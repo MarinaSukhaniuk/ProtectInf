@@ -22,7 +22,6 @@ public class HomeController extends GlobalController {
     @RequestMapping(value = "index")
     public String home(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
         setPageTitle(map, "Home page");
-        setPageTitle(map,"lol");
         return "index.jsp";
     }
 }
