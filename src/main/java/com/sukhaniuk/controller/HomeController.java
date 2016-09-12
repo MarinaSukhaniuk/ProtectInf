@@ -1,6 +1,6 @@
-package com.shyslav.controller;
+package com.sukhaniuk.controller;
 
-import com.shyslav.utils.GlobalController;
+import com.sukhaniuk.utils.GlobalController;
 import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,9 +19,9 @@ import java.util.logging.Logger;
 public class HomeController extends GlobalController {
     private static final Logger log = Logger.getLogger(HomeController.class.getName());
 
-    @RequestMapping(value = "index")
+    @RequestMapping(value = {"index","/",""})
     public String home(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
         setPageTitle(map, "Home page");
-        return "index.jsp";
+        return "index";
     }
 }

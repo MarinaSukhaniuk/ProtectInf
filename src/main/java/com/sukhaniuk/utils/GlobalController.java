@@ -1,4 +1,4 @@
-package com.shyslav.utils;
+package com.sukhaniuk.utils;
 
 import org.springframework.ui.ModelMap;
 
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Logger;
 
 /**
- * Created by shyslav on 9/9/16.
+ * Created by sukhaniuk on 9/9/16.
  */
 public class GlobalController {
     private static final Logger log = Logger.getLogger(GlobalController.class.getName());
