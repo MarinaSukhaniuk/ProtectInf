@@ -8,20 +8,30 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AdminRedirect extends HandlerInterceptorAdapter {
     /**
-     * execute this function before spring method
-     * @param request   - servlet request
-     * @param response  - servlet response
-     * @param handler   - handler
-     * @return          result enter to method or not
-     * @throws Exception
+     * This function Execute before spring method handler
+     *
+     * @param request  - servlet request
+     * @param response - servlet response
+     * @param handler  - handler
+     * @return result enter to method or not
      */
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         System.out.println("lalal");
-        return super.preHandle(request, response, handler);
+        response.sendError(303);
+        return false;
+//        return super.preHandle(request, response, handler);
     }
 
+    /**
+     * This function Execute after spring method handler
+     *
+     * @param request  - servlet request
+     * @param response - servlet response
+     * @param handler  - handler
+     * @return result enter to method or not
+     */
     @Override
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
@@ -29,6 +39,14 @@ public class AdminRedirect extends HandlerInterceptorAdapter {
         super.postHandle(request, response, handler, modelAndView);
     }
 
+    /**
+     * This function Execute after spring method handled
+     *
+     * @param request  - servlet request
+     * @param response - servlet response
+     * @param handler  - handler
+     * @return result enter to method or not
+     */
     @Override
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler, Exception ex)
