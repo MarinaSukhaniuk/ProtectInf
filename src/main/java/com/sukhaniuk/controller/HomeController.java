@@ -24,6 +24,8 @@ import java.util.logging.Logger;
 @SuppressWarnings("unused")
 @Controller
 public class HomeController extends GlobalController {
+    private static final int [] ROLE = {6,7};
+
     private static final Logger log = Logger.getLogger(HomeController.class.getName());
 
     @RequestMapping(value = {"index","/",""})

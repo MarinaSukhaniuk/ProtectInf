@@ -1,6 +1,6 @@
 package com.sukhaniuk.utils;
 
-import com.sukhaniuk.controller.AdminController;
+import com.sukhaniuk.controller.LoginController;
 import com.sukhaniuk.storage.UsersStorage;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminRedirect extends HandlerInterceptorAdapter {
+public class LoginRedirect extends HandlerInterceptorAdapter {
     /**
      * This function Execute before spring method handler
      *
@@ -20,7 +20,7 @@ public class AdminRedirect extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        if(!UsersStorage.checkRole(AdminController.ROLE)){
+        if(!UsersStorage.checkRole(LoginController.ROLE)){
             response.sendError(303);
             return false;
         }

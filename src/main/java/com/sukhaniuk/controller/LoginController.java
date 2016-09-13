@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -19,19 +20,19 @@ import java.util.logging.Logger;
 @Controller
 public class LoginController extends GlobalController {
     private static final Logger log = Logger.getLogger(LoginController.class.getName());
-
+    public static final int [] ROLE = {0,1};
     @RequestMapping(value = "login")
     public String login(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
         return "login";
     }
 
     @RequestMapping(value = "login/signin")
-    public String signin(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
+    public void signin(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
         String email = request.getParameter("email");
         String password = request.getParameter("passwordes");
-        UsersStorage.login(email,password);
-        System.out.println("--"+password+"  "+email);
-        return "login";
+        //TODO: add password and mail validation
+        request.getSession().setAttribute("storage",UsersStorage.login(email,password));
+        response.sendRedirect("/index.htm");
     }
 
     @RequestMapping(value = "login/signout")

@@ -23,7 +23,7 @@ public class DatabaseConnection {
     {
         ClassLoader classLoader = getClass().getClassLoader();
         Properties props = new Properties();
-        try (InputStream in = classLoader.getResourceAsStream("database/database.properties")) {
+        try (InputStream in = classLoader.getResourceAsStream("database.properties")) {
             props.load(in);
         } catch (IOException ex) {
             log.error("cannot be read properties file" + ex);
