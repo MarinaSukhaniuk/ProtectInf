@@ -1,8 +1,5 @@
 package com.sukhaniuk.databases.models;
 
-/**
- * Created by shyslav on 9/13/16.
- */
 public class User {
     private int id;
     private Role role;

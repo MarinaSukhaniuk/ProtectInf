@@ -3,9 +3,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by shyslav on 9/13/16.
- */
 public class database {
     DatabaseConnection db = new DatabaseConnection();
     @Test
