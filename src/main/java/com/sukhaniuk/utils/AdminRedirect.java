@@ -19,7 +19,7 @@ public class AdminRedirect extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         System.out.println("lalal");
-        response.sendError(303);
+        //response.sendError(303);
         return false;
 //        return super.preHandle(request, response, handler);
     }

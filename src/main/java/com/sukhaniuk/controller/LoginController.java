@@ -27,9 +27,10 @@ public class LoginController extends GlobalController {
 
     @RequestMapping(value = "login/signin")
     public String signin(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        UsersStorage.login(login,password);
+        String email = request.getParameter("email");
+        String password = request.getParameter("passwordes");
+        UsersStorage.login(email,password);
+        System.out.println("--"+password+"  "+email);
         return "login";
     }
 
