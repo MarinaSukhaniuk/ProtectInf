@@ -1,5 +1,7 @@
 package com.sukhaniuk.controller;
 
+import com.sukhaniuk.Validation;
+import com.sukhaniuk.databases.models.Alert;
 import com.sukhaniuk.storage.UsersStorage;
 import com.sukhaniuk.utils.GlobalController;
 import org.json.JSONException;
@@ -23,6 +25,8 @@ public class LoginController extends GlobalController {
     public static final int [] ROLE = {0,1};
     @RequestMapping(value = "login")
     public String login(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
+        Alert alert = new Alert("success", "Check ok", "password is ok");
+        map.put("alert",alert);
         return "login";
     }
 
@@ -30,7 +34,11 @@ public class LoginController extends GlobalController {
     public void signin(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
         String email = request.getParameter("email");
         String password = request.getParameter("passwordes");
-        //TODO: add password and mail validation
+        if(Validation.checkpassword(password))
+        {
+            Alert alert = new Alert("success", "Check ok", "password is ok");
+            map.put("alert",alert);
+        }
         request.getSession().setAttribute("storage",UsersStorage.login(email,password));
         response.sendRedirect("/index.htm");
     }

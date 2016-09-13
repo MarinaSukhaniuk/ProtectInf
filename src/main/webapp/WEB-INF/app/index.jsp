@@ -1,6 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="layout/header.jsp"/>
 <jsp:include page="layout/navbar.jsp"/>
+
 <div class="container">
     <div class="jumbotron">
         <h1>Navbar example</h1>

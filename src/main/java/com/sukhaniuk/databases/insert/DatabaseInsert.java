@@ -16,18 +16,14 @@ public class DatabaseInsert {
 
     private static DatabaseConnection db = new DatabaseConnection();
 
-    /**
-     * Insert to database action
-     *
-     * @param tableName table name
-     * @param values    insert values
-     * @param rows      insert rows
-     * @return result of query execute
-     */
-    public static String insert(String tableName, String[] values, String[] rows) {
-        log.info("try to insert to database to" + tableName);
+
+    public static String insertData(String role_id, String login, String password) {
+        log.info("try to insert to database to");
         db.openConnection();
-        String command = "insert into " + tableName + "(" + String.join(",", rows) + ") values ('" + String.join("','", values) + "')";
+        String command = "insert into users(role_id, login, password) VALUES (" +
+                "'" + role_id + "'," +
+                "'" + login + "'," +
+                "'" + password + "')";
         log.info(command);
         System.out.println(command);
         try {
@@ -40,56 +36,5 @@ public class DatabaseInsert {
         }
         return "done";
     }
-
-    /**
-     * Insert to database with use prepare statement
-     *
-     * @param tableName table name
-     * @param values    insert values
-     * @param rows      insert rows
-     * @return result of query execute
-     */
-    public static boolean prepareInsert(String tableName, Object[] values, String[] rows) {
-        log.info("try to insert to database with Prepare Statement to" + tableName);
-        Connection conn = db.getConnection();
-        String command = "insert into " + tableName + "(" + String.join(",", rows) + ") values (" + generatePrepare(values.length) + ")";
-        log.info(command);
-        try {
-            PreparedStatement ps = conn.prepareStatement(command);
-            for (int i = 0; i < values.length; i++) {
-                if (values[i] instanceof Integer) {
-                    ps.setInt(i + 1, (int) values[i]);
-                } else if (values[i] instanceof InputStream) {
-                    ps.setBinaryStream(i + 1, (InputStream) values[i]);
-                } else if(values[i] instanceof  Long){
-                    ps.setLong(i+1, (Long) values[i]);
-                } else {
-                    ps.setString(i + 1, (String) values[i]);
-                }
-            }
-            ps.execute();
-        } catch (SQLException e) {
-            log.error("error insert to database" + e);
-            return false;
-        } finally {
-            db.closeConnection();
-        }
-        return true;
-    }
-
-    /**
-     * Generate prepare string values query
-     *
-     * @param length - amount values in query
-     * @return String question symbols
-     */
-    private static String generatePrepare(int length) {
-        String result = "";
-        for (int i = 0; i < length; i++) {
-            result += "?";
-            if (i < length - 1)
-                result += ",";
-        }
-        return result;
-    }
 }
+

@@ -33,3 +33,12 @@
 </head>
 
 <body>
+<div class="col-lg-12" id="flash" style="padding: 0 50px;"></div>
+    <script>
+        function addFlashMessage(type, title, text) {
+            document.getElementById("flash").innerHTML = "<div class=\"alert alert-" + type + "\"> " +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>"+
+                    "<strong>" + title + "</strong> <br>" + text +
+                    "</div>";
+        }
+    </script>
