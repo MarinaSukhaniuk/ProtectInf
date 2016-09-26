@@ -42,35 +42,41 @@ public class LoginController extends GlobalController {
         String password = request.getParameter("passwordes");
         System.out.println("Password is " + password);
         //check of password. If not null
-        if (password != null) {
+        if (email != null || password != null) {
             //Check of password. If the length is ok
             if (Validation.checkpassword(password)) {
                 //Check of user. If user exists in db
                 if (Validation.checkuser(password, email)) {
                     User user = SelectCommand.selectUserByMail(email);
-                    UsersStorage storage = UsersStorage.login(email,password,user.getRole());
-                    Alert alert = new Alert("success", "Check is ok", "You are logged in");
+                    UsersStorage storage = UsersStorage.login(email, password, user.getRole());
+                    Alert alert = new Alert("success", "Authorization succeed", "You are logged in");
                     request.getSession().setAttribute("alert", alert);
-                    request.getSession().setAttribute("login", email);
-                    request.getSession().setAttribute("storage",storage);
-                    response.sendRedirect("/index.htm");
+                    request.getSession().setAttribute("login", user.getRole().getName());
+                    request.getSession().setAttribute("storage", storage);
+                    request.getSession().setAttribute("password", password);
+                    request.getSession().setAttribute("email", email);
+                    //if user is admin
+                    if(user.getRole().getPermission() == 7){
+                        response.sendRedirect("/admin/index.htm");
+                    }
+                    else response.sendRedirect("/index.htm");
                     //Check of users. If users doesn`t exist in db
                 } else {
-                    Alert alert = new Alert("danger", "Check not ok", "User is not ok");
+                    Alert alert = new Alert("danger", "Authorization failed", "Your password or login are wrong");
                     request.getSession().setAttribute("alert", alert);
                     response.sendRedirect("/login.htm");
                     return;
                 }
                 //Check of password. If length is not ok
             } else {
-                Alert alert = new Alert("danger", "Check not ok", "password is not ok");
+                Alert alert = new Alert("danger", "Authorization failed", "Password is too short");
                 request.getSession().setAttribute("alert", alert);
                 response.sendRedirect("/login.htm");
                 return;
             }
             //Check of password. If length is null
         } else {
-            Alert alert = new Alert("danger", "Check not ok", "password is not ok");
+            Alert alert = new Alert("danger", "Authorization failed", "You didn`t enter password or login");
             request.getSession().setAttribute("alert", alert);
             response.sendRedirect("/login.htm");
             System.out.println("NULL pass");
@@ -79,12 +85,21 @@ public class LoginController extends GlobalController {
         //response.sendRedirect("/index.htm");
     }
 
-    @RequestMapping(value = "logout")
+    @RequestMapping(value = "/logout")
     public String logout(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
         System.out.println("---------logout");
         UsersStorage usersStorage = (UsersStorage) request.getSession().getAttribute("storage");
-        if(usersStorage!=null)
-        usersStorage.logout(request);
+        if (usersStorage != null)
+            usersStorage.logout(request);
         return "redirect:/index.htm";
     }
+    @RequestMapping(value = "admin/logout")
+    public String adminlogout(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
+        System.out.println("---------logout");
+        UsersStorage usersStorage = (UsersStorage) request.getSession().getAttribute("storage");
+        if (usersStorage != null)
+            usersStorage.logout(request);
+        return "redirect:/index.htm";
+    }
+
 }

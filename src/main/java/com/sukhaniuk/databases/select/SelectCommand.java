@@ -38,7 +38,7 @@ public class SelectCommand {
     }
 
     public static boolean checkUser(String email, String pass) {
-        log.info("try to select users");
+        log.info("check user");
         String query = "select * from users where email = '" + email + "' and password = '" + pass + "'";
         System.out.println(query);
         db.openConnection();
@@ -53,5 +53,18 @@ public class SelectCommand {
             db.closeConnection();
         }
         return false;
+    }
+    public static void UpdatePassword(String newPassword, String email) {
+        log.info("check user");
+        String query = "update users set password = '"+newPassword+"' where email = '"+email+"'";
+        System.out.println(query);
+        db.openConnection();
+        try {
+            db.st.execute(query);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        db.closeConnection();
+
     }
 }
