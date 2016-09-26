@@ -1,18 +1,18 @@
+<%@ page import="com.sukhaniuk.databases.models.Alert" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="layout/header.jsp"/>
 <jsp:include page="layout/navbar.jsp"/>
-
-<div class="container">
-    <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>To see the difference between static and fixed top navbars, just scroll.</p>
-        <p>
-            <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-        </p>
-    </div>
-</div>
+<%
+    if (session.getAttribute("alert") != null) {
+        Alert alert = (Alert) session.getAttribute("alert");
+%>
+<script>
+    addFlashMessage("<%=alert.getType()%>", "<%=alert.getTitle()%>", "<%=alert.getText()%>");
+    <%session.removeAttribute("alert"); %>
+</script>
+Hello <%=session.getAttribute("login")%>
+<%}%>
 <jsp:include page="layout/footer.jsp"/>
 
 

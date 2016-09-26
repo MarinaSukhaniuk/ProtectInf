@@ -14,31 +14,32 @@ public class SelectCommand {
 
     private static DatabaseConnection db = new DatabaseConnection();
 
-    public static ArrayList<User> selectUsers() {
+    public static User selectUserByMail(String email) {
         log.info("try to select users");
-        ArrayList<User> result = new ArrayList();
-        String query = "select * from user inner join role on user.roleID = role.id";
+        String query = "select * from users inner join roles on users.role_id = roles.id where users.email  = '" + email + "'";
         db.openConnection();
         try {
             db.rs = db.st.executeQuery(query);
-            while (db.rs.next()) {
-                result.add(new User(
+            if (db.rs.next()) {
+                return new User(
                         db.rs.getInt("id"),
-                        new Role(db.rs.getInt("role_id"), db.rs.getString("name"), db.rs.getInt("permission")),
+                        new Role(db.rs.getInt("role_id"),
+                                db.rs.getString("name"),
+                                db.rs.getInt("permission")),
                         db.rs.getString("email"),
-                        db.rs.getString("password")));
+                        db.rs.getString("password"));
             }
         } catch (SQLException ex) {
             log.error("execute query error" + ex);
         } finally {
             db.closeConnection();
         }
-        return result;
+        return null;
     }
 
     public static boolean checkUser(String email, String pass) {
         log.info("try to select users");
-        String query = "select * from user where email = '" + email + "' and password = '" + pass +"'";
+        String query = "select * from users where email = '" + email + "' and password = '" + pass + "'";
         System.out.println(query);
         db.openConnection();
         try {

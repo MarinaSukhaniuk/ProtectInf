@@ -2,8 +2,11 @@ package com.sukhaniuk.controller;
 
 import com.sukhaniuk.Validation;
 import com.sukhaniuk.databases.models.Alert;
+import com.sukhaniuk.databases.models.User;
+import com.sukhaniuk.databases.select.SelectCommand;
 import com.sukhaniuk.storage.UsersStorage;
 import com.sukhaniuk.utils.GlobalController;
+import com.sun.org.apache.bcel.internal.generic.Select;
 import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,29 +25,66 @@ import java.util.logging.Logger;
 @Controller
 public class LoginController extends GlobalController {
     private static final Logger log = Logger.getLogger(LoginController.class.getName());
-    public static final int [] ROLE = {0,1};
+    public static final int[] ROLE = {0, 1};
+    private User user;
+
     @RequestMapping(value = "login")
     public String login(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
-        Alert alert = new Alert("success", "Check ok", "password is ok");
-        map.put("alert",alert);
+        //Alert alert = new Alert("success", "Check ok", "password is ok");
+        //map.put("alert",alert);д
         return "login";
     }
+
 
     @RequestMapping(value = "login/signin")
     public void signin(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
         String email = request.getParameter("email");
         String password = request.getParameter("passwordes");
-        if(Validation.checkpassword(password))
-        {
-            Alert alert = new Alert("success", "Check ok", "password is ok");
-            map.put("alert",alert);
+        System.out.println("Password is " + password);
+        //check of password. If not null
+        if (password != null) {
+            //Check of password. If the length is ok
+            if (Validation.checkpassword(password)) {
+                //Check of user. If user exists in db
+                if (Validation.checkuser(password, email)) {
+                    User user = SelectCommand.selectUserByMail(email);
+                    UsersStorage storage = UsersStorage.login(email,password,user.getRole());
+                    Alert alert = new Alert("success", "Check is ok", "You are logged in");
+                    request.getSession().setAttribute("alert", alert);
+                    request.getSession().setAttribute("login", email);
+                    request.getSession().setAttribute("storage",storage);
+                    response.sendRedirect("/index.htm");
+                    //Check of users. If users doesn`t exist in db
+                } else {
+                    Alert alert = new Alert("danger", "Check not ok", "User is not ok");
+                    request.getSession().setAttribute("alert", alert);
+                    response.sendRedirect("/login.htm");
+                    return;
+                }
+                //Check of password. If length is not ok
+            } else {
+                Alert alert = new Alert("danger", "Check not ok", "password is not ok");
+                request.getSession().setAttribute("alert", alert);
+                response.sendRedirect("/login.htm");
+                return;
+            }
+            //Check of password. If length is null
+        } else {
+            Alert alert = new Alert("danger", "Check not ok", "password is not ok");
+            request.getSession().setAttribute("alert", alert);
+            response.sendRedirect("/login.htm");
+            System.out.println("NULL pass");
+            return;
         }
-        request.getSession().setAttribute("storage",UsersStorage.login(email,password));
-        response.sendRedirect("/index.htm");
+        //response.sendRedirect("/index.htm");
     }
 
-    @RequestMapping(value = "login/signout")
-    public String signout(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
-        return "login";
+    @RequestMapping(value = "logout")
+    public String logout(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
+        System.out.println("---------logout");
+        UsersStorage usersStorage = (UsersStorage) request.getSession().getAttribute("storage");
+        if(usersStorage!=null)
+        usersStorage.logout(request);
+        return "redirect:/index.htm";
     }
 }

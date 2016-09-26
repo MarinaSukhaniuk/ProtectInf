@@ -1,3 +1,4 @@
+<%@ page import="com.sukhaniuk.databases.models.Alert" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -9,15 +10,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="layout/header.jsp"/>
 <jsp:include page="layout/navbar.jsp"/>
-<c:if test="${not empty alert}">
-    <script>
-        addFlashMessage("${alert.type}", "${alert.title}", "${alert.text}");
-    </script>
-</c:if>
+<%
+    if (session.getAttribute("alert") != null) {
+        Alert alert = (Alert) session.getAttribute("alert");
+%>
+<script>
+    addFlashMessage("<%=alert.getType()%>", "<%=alert.getTitle()%>", "<%=alert.getText()%>");
+    <%session.removeAttribute("alert"); %>
+</script>
+<%}%>
 <div class="container ">
     <div class="row center-block">
-        <div class="grid_4  ">
-            <div class="jumbotron text-center">
+        <div class="jumbotron text-center">
+            <div class="grid_4  ">
                 <h3>Sign in form<span class="label label-default"></span></h3>
                 <hr>
                 <form class="myForm" action="/login/signin.htm" method="POST">
@@ -35,6 +40,11 @@
                     <input type="submit" value="Sign in" class="btn btn-default navbar-btn col-lg-4 col-lg-offset-4"/>
                 </form>
             </div>
+
+        <div class="jumbotron">
+            <hr>
+            <h5>For registration <a href="#">click here</a></h5>
+        </div>
         </div>
     </div>
 </div>
