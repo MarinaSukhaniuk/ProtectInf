@@ -26,6 +26,13 @@
             <div class="grid_4  ">
                 <h3>View list of users<span class="label label-default"></span></h3>
                 <hr>
+                <div class="form-group">
+                    <form action="/admin/createuser.htm" method="POST">
+                        <input type="email" class="form-control" id="username" name="username"
+                               placeholder="username" required>
+                        <input class="form-control btn" type="submit" value="add user">
+                    </form>
+                </div>
                 <form class="myFormlist" action="/admin/listUsers.htm" method="GET">
 
                     <div class="panel panel-default">
@@ -62,7 +69,8 @@
                                             <td>${num.login}</td>
                                             <td>${num.password}</td>
                                             <c:if test="${num.role.permission == 0}">
-                                            <td><a href="/admin/block.htm?id=${num.id}&comm=unblock">Unblock</a></td>
+                                                <td><a href="/admin/block.htm?id=${num.id}&comm=unblock">Unblock</a>
+                                                </td>
                                             </c:if>
                                             <c:if test="${num.role.permission != 0}">
                                                 <td><a href="/admin/block.htm?id=${num.id}&comm=block">Block</a></td>

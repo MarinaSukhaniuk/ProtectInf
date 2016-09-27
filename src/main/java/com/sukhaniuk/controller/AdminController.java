@@ -1,5 +1,7 @@
 package com.sukhaniuk.controller;
 
+import com.sukhaniuk.databases.configuration.DatabaseConnection;
+import com.sukhaniuk.databases.insert.DatabaseInsert;
 import com.sukhaniuk.databases.models.Alert;
 import com.sukhaniuk.databases.models.User;
 import com.sukhaniuk.databases.select.SelectCommand;
@@ -77,6 +79,22 @@ public class AdminController {
                     new String[]{"id = '" + id + "'"});
         }
         Alert alert = new Alert("success", "Success", "User's permission changed");
+        request.getSession().setAttribute("alert", alert);
+        response.sendRedirect("/admin/listUsers.htm");
+    }
+    @RequestMapping(value = "admin/createuser")
+    public void createuser(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
+        String userName = request.getParameter("username");
+        if (userName == null
+                || userName.length()<3
+                || SelectCommand.selectUserByMail(userName)!=null){
+            Alert alert = new Alert("danger", "Error", "Wrong username");
+            request.getSession().setAttribute("alert", alert);
+            response.sendRedirect("/admin/listUsers.htm");
+            return;
+        }
+        DatabaseInsert.prepareInsert("users",new Object[]{userName,3,1234}, new String[]{"email","role_id","password"});
+        Alert alert = new Alert("success", "Success", "User has been created");
         request.getSession().setAttribute("alert", alert);
         response.sendRedirect("/admin/listUsers.htm");
     }
