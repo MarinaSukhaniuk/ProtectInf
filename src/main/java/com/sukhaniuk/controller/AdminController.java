@@ -1,6 +1,7 @@
 package com.sukhaniuk.controller;
 
 import com.sukhaniuk.databases.models.Alert;
+import com.sukhaniuk.databases.models.User;
 import com.sukhaniuk.databases.select.SelectCommand;
 import com.sukhaniuk.storage.UsersStorage;
 import org.json.JSONException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 
 @Controller
@@ -45,5 +47,12 @@ public class AdminController {
         }
         return;
     }
-
+    @RequestMapping(value = "admin/listUsers")
+    public String viewUsers(ModelMap map, HttpServletRequest request, HttpServletResponse response)throws IOException, JSONException, SQLException
+    {
+        SelectCommand sel = new SelectCommand();
+        List<User> userList = sel.GetUsers();
+        request.setAttribute("users", userList);
+        return "listUsers";
+    }
 }

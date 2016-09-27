@@ -7,12 +7,15 @@ import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class SelectCommand {
     private static final Logger log = Logger.getLogger(SelectCommand.class.getName());
 
     private static DatabaseConnection db = new DatabaseConnection();
+    public List<User> usersList = new LinkedList();
 
     public static User selectUserByMail(String email) {
         log.info("try to select users");
@@ -54,9 +57,10 @@ public class SelectCommand {
         }
         return false;
     }
+
     public static void UpdatePassword(String newPassword, String email) {
         log.info("check user");
-        String query = "update users set password = '"+newPassword+"' where email = '"+email+"'";
+        String query = "update users set password = '" + newPassword + "' where email = '" + email + "'";
         System.out.println(query);
         db.openConnection();
         try {
@@ -65,6 +69,32 @@ public class SelectCommand {
             System.out.println(e);
         }
         db.closeConnection();
+    }
 
+    public List GetUsers() {
+        usersList.clear();
+        String query = null;
+        query = "select users.id user_id, roles.id role_id, roles.name, roles.permission,  users.email, users.password\n" +
+                "from users inner join roles on users.role_id = roles.id order by user_id";
+        db.openConnection();
+
+        try {
+            db.rs = db.st.executeQuery(query);
+            while (db.rs.next()) {
+                usersList.add(new User(
+                                db.rs.getInt("user_id"),
+                                new Role(db.rs.getInt("role_id"),
+                                        db.rs.getString("name"),
+                                        db.rs.getInt("permission")),
+                                db.rs.getString("email"),
+                                db.rs.getString("password")
+                        )
+                );
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        db.closeConnection();
+        return usersList;
     }
 }

@@ -37,6 +37,10 @@ public class User {
         this.login = login;
     }
 
+    public void setPassword(String password) {this.password = password;}
+
+    public String getPassword() { return password; }
+
     public boolean checkPass(String password){
         return password.equals(password);
     }

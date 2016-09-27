@@ -28,6 +28,7 @@
     <div class="list-group">
 
         <a href="/admin/changePassword.htm" class="list-group-item">Change password</a>
+        <a href="/admin/listUsers.htm" class="list-group-item">View list of users</a>
         <button type="button" class="list-group-item">Morbi leo risus</button>
         <button type="button" class="list-group-item">Porta ac consectetur ac</button>
         <button type="button" class="list-group-item">Vestibulum at eros</button>
