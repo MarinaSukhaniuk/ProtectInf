@@ -2,6 +2,7 @@ import com.sukhaniuk.databases.configuration.DatabaseConnection;
 import com.sukhaniuk.databases.select.SelectCommand;
 import com.sukhaniuk.license.ComputerData;
 import com.sukhaniuk.license.DriverInfo;
+import com.sukhaniuk.license.LicensesArrayList;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -50,5 +51,10 @@ public class database {
         for (DriverInfo driver: ComputerData.getDriverInfo()){
             System.out.println("Disk: " + driver.getDisplayName() + " Total space: " + driver.getTotalSpace());
         }
+    }
+    @Test
+    public void testBase64(){
+        LicensesArrayList licensesArrayList = new LicensesArrayList();
+        assertTrue(licensesArrayList.checkLicense());
     }
 }

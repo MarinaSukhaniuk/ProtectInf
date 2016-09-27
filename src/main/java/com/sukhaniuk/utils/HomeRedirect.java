@@ -2,6 +2,7 @@ package com.sukhaniuk.utils;
 
 import com.sukhaniuk.controller.HomeController;
 import com.sukhaniuk.controller.LoginController;
+import com.sukhaniuk.license.LicensesArrayList;
 import com.sukhaniuk.storage.UsersStorage;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -21,6 +22,10 @@ public class HomeRedirect extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
+        if(!LicensesArrayList.checkLicense()){
+            System.out.println("LICENSE ERROR");
+            System.exit(0);
+        }
         if(!UsersStorage.checkRole(HomeController.ROLE)){
             response.sendError(999);
             return false;
