@@ -28,28 +28,6 @@ public class AdminController {
         return "index";
     }
 
-    @RequestMapping(value = "admin/changePassword")
-    public String changePassword(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
-        return "changePassword";
-    }
-
-    @RequestMapping(value = "admin/changePassword/confirm")
-    public void changePasswordConfirm(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
-        String oldPassword = request.getParameter("old_password");
-        String newPassword = request.getParameter("new_password");
-        if (oldPassword.matches(request.getSession().getAttribute("password").toString())) {
-            SelectCommand.UpdatePassword(newPassword, request.getSession().getAttribute("email").toString());
-            Alert alert = new Alert("success", "Changing of password succeed", "Password is changed");
-            request.getSession().setAttribute("alert", alert);
-            response.sendRedirect("/admin/index.htm");
-        } else {
-            Alert alert = new Alert("danger", "Changing of password failed", "Passwors don`t match");
-            request.getSession().setAttribute("alert", alert);
-            response.sendRedirect("/admin/changePassword.htm");
-        }
-        return;
-    }
-
     @RequestMapping(value = "admin/listUsers")
     public String viewUsers(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
         SelectCommand sel = new SelectCommand();

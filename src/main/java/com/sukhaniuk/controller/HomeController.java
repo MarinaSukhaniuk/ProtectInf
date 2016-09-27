@@ -1,5 +1,8 @@
 package com.sukhaniuk.controller;
 
+import com.sukhaniuk.databases.models.Alert;
+import com.sukhaniuk.databases.select.SelectCommand;
+import com.sukhaniuk.storage.UsersStorage;
 import com.sukhaniuk.utils.GlobalController;
 import org.json.JSONException;
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -24,9 +28,35 @@ import java.util.logging.Logger;
 @SuppressWarnings("unused")
 @Controller
 public class HomeController extends GlobalController {
-    private static final int [] ROLE = {6,7};
-
     private static final Logger log = Logger.getLogger(HomeController.class.getName());
+    public static final int [] ROLE = {1,6,7};
+
+    @RequestMapping(value = "changePassword")
+    public String changePassword(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
+        return "changePassword";
+    }
+
+    @RequestMapping(value = "changePassword/confirm")
+    public void changePasswordConfirm(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, SQLException {
+        String oldPassword = request.getParameter("old_password");
+        String newPassword = request.getParameter("new_password");
+        String confNewPassword = request.getParameter("conf_new_password");
+        UsersStorage storage = (UsersStorage) request.getSession().getAttribute("storage");
+        if (oldPassword.equals(storage.getUser().getPassword())
+                && confNewPassword.equals(newPassword)
+                && newPassword.toLowerCase().matches("^[а-я]+")) {
+            SelectCommand.UpdatePassword(newPassword, request.getSession().getAttribute("email").toString());
+            storage.getUser().setPassword(newPassword);
+            Alert alert = new Alert("success", "Changing of password succeed", "Password is changed");
+            request.getSession().setAttribute("alert", alert);
+            response.sendRedirect("/index.htm");
+        } else {
+            Alert alert = new Alert("danger", "Changing of password failed", "Passwors don`t match");
+            request.getSession().setAttribute("alert", alert);
+            response.sendRedirect("/changePassword.htm");
+        }
+        return;
+    }
 
     @RequestMapping(value = {"index","/",""})
     public String home(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {

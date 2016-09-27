@@ -36,6 +36,11 @@
             <mapping path="/login/*" />
             <beans:bean class="com.sukhaniuk.utils.LoginRedirect"/>
         </interceptor>
+
+        <interceptor>
+            <mapping path="/*" />
+            <beans:bean class="com.sukhaniuk.utils.HomeRedirect"/>
+        </interceptor>
     </interceptors>
 
 

@@ -25,7 +25,7 @@
             <div class="grid_4  ">
                 <h3>Change password form<span class="label label-default"></span></h3>
                 <hr>
-                <form class="myFormpass" action="/admin/changePassword/confirm.htm" method="POST">
+                <form class="myFormpass" action="/changePassword/confirm.htm" method="POST">
 
                     <div class="input-group col-lg-6 col-lg-offset-3">
                         <span class="input-group-addon" id="basic-addon1">#</span>
@@ -35,6 +35,11 @@
                     <div class="input-group col-lg-6 col-lg-offset-3">
                         <span class="input-group-addon" id="basic-addon2">#</span>
                         <input type="password" name="new_password" class="form-control" placeholder="New password"
+                               aria-describedby="basic-addon1" value="">
+                    </div>
+                    <div class="input-group col-lg-6 col-lg-offset-3">
+                        <span class="input-group-addon" id="basic-addon3">#</span>
+                        <input type="password" name="conf_new_password" class="form-control" placeholder="Confirm new password"
                                aria-describedby="basic-addon1" value="">
                     </div>
                     <input type="submit" value="Confirm" class="btn btn-default navbar-btn col-lg-4 col-lg-offset-4"/>
