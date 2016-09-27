@@ -8,7 +8,9 @@
 <%@ page import="com.sukhaniuk.databases.models.Alert" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>           <%--<td><a href = "#">--%>
+                                                <%--<img src="/Restaurant_course/boo/img/edit-xxl.png" class="img-left" height="23" width="23"></a></td>--%>
+
 <jsp:include page="layout/header.jsp"/>
 <jsp:include page="layout/navbar.jsp"/>
 <%
@@ -64,19 +66,28 @@
                                         <tr>
                                             <td><input type="checkbox" name="checkel_users"
                                                        value="${num.id}"></td>
-                                            <td>${num.id}</td>
-                                            <td>${num.role.name}</td>
-                                            <td>${num.login}</td>
-                                            <td>${num.password}</td>
+                                            <td>
+                                                    ${num.id}
+                                            </td>
+                                            <td>
+                                                    ${num.role.name}
+                                            </td>
+                                            <td>
+                                                    ${num.login}
+                                            </td>
+                                            <td>
+                                                    ${num.password}
+                                            </td>
                                             <c:if test="${num.role.permission == 0}">
-                                                <td><a href="/admin/block.htm?id=${num.id}&comm=unblock">Unblock</a>
+                                                <td>
+                                                    <a href="/admin/block.htm?id=${num.id}&comm=unblock">Unblock</a>
                                                 </td>
                                             </c:if>
                                             <c:if test="${num.role.permission != 0}">
-                                                <td><a href="/admin/block.htm?id=${num.id}&comm=block">Block</a></td>
+                                                <td>
+                                                    <a href="/admin/block.htm?id=${num.id}&comm=block">Block</a>
+                                                </td>
                                             </c:if>
-                                                <%--<td><a href = "#">--%>
-                                                <%--<img src="/Restaurant_course/boo/img/edit-xxl.png" class="img-left" height="23" width="23"></a></td>--%>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
