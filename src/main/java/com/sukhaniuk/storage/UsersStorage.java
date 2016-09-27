@@ -61,4 +61,12 @@ public class UsersStorage {
         user = null;
         permission = 1;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public static int getPermission() {
+        return permission;
+    }
 }

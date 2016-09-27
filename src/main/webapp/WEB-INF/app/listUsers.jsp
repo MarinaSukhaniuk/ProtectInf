@@ -46,6 +46,8 @@
                                         </th>
                                         <th>password<br>
                                         </th>
+                                        <th>Block<br>
+                                        </th>
                                         <%--<th>Edit</th>--%>
                                     </tr>
                                     </thead>
@@ -59,7 +61,13 @@
                                             <td>${num.role.name}</td>
                                             <td>${num.login}</td>
                                             <td>${num.password}</td>
-                                            <%--<td><a href = "#">--%>
+                                            <c:if test="${num.role.permission == 0}">
+                                            <td><a href="/admin/block.htm?id=${num.id}&comm=unblock">Unblock</a></td>
+                                            </c:if>
+                                            <c:if test="${num.role.permission != 0}">
+                                                <td><a href="/admin/block.htm?id=${num.id}&comm=block">Block</a></td>
+                                            </c:if>
+                                                <%--<td><a href = "#">--%>
                                                 <%--<img src="/Restaurant_course/boo/img/edit-xxl.png" class="img-left" height="23" width="23"></a></td>--%>
                                         </tr>
                                     </c:forEach>
