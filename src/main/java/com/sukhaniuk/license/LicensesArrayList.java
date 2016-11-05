@@ -1,13 +1,18 @@
 package com.sukhaniuk.license;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.commons.codec.binary.Base64;
 
 public class LicensesArrayList {
-    private static ArrayList<String> licenses = new ArrayList<>();
+    public static ArrayList<String> licenses = new ArrayList<>();
 
     public LicensesArrayList() {
+
+        getLicenses();
         generateKey();
     }
 
@@ -24,9 +29,9 @@ public class LicensesArrayList {
         return hash;
     }
 
-    public static boolean checkLicense() {
+    public boolean checkLicense() {
         String thisComputerBase64 = generateKey();
-        for (String license : getLicenses()) {
+        for (String license : LicensesArrayList.licenses) {
             if (license.equals(thisComputerBase64)) {
                 return true;
             }
@@ -34,14 +39,24 @@ public class LicensesArrayList {
         return false;
     }
 
-    public static ArrayList<String> getLicenses() {
-        licenses.add("c2h5c2xhdi1MYXRpdHVkZS1FNzI0MC8xMjcuMC4xLjF8fHxzaHlzbGF2fHx8L2hvbWUvc2h5c2xhdi9Qcm9qZWN0cy9wZXJzb25hbC9NYXJpbmEvc3ByaW5nX3RlbXBsYXRlfHx8NzY4fHx8MTR8fHw0NjY1MzY3MzQ3Mnx8fA==");
-        licenses.add("c2h5c2xhdi1MYXRpdHVkZS1FNzI0MC8xMjcuMC4xLjF8fHxzaHlzbGF2fHx8L2hvbWUvc2h5c2xhdi9TZXJ2ZXIvamV0dHktZGlzdHJpYnV0aW9uLTkuMy4xMS52MjAxNjA3MjF8fHw3Njh8fHwxNHx8fDQ2NjUzNjczNDcyfHx8");
-        licenses.add("SG9tZU0vMTkyLjE2OC4wLjExNnx8fE1hcmluYXx8fEM6XEpldHR5XGpldHR5LWRpc3RyaWJ1dGlvbi05LjMuMTIudjIwMTYwOTE1fHx8OTAwfHx8NXx8fDIyODA0MDQ0MTg1Nnx8fA==");
-        licenses.add("SG9tZU0vMTI3LjAuMC4xfHx8TWFyaW5hfHx8QzpcSmV0dHlcamV0dHktZGlzdHJpYnV0aW9uLTkuMy4xMi52MjAxNjA5MTV8fHw5MDB8fHw1fHx8MjI4MDQwNDQxODU2fHx8");
-        licenses.add("SG9tZU0vMTkyLjE2OC40My4yMzB8fHxNYXJpbmF8fHxDOlxKZXR0eVxqZXR0eS1kaXN0cmlidXRpb24tOS4zLjEyLnYyMDE2MDkxNXx8fDkwMHx8fDV8fHwyMjgwNDA0NDE4NTZ8fHw=");
-
+    public ArrayList<String> getLicenses() {
+        licenses.clear();
+        readLicenseFromTxtFile();
         return licenses;
+    }
+    public void readLicenseFromTxtFile(){
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("Licenses.txt").getFile());
+
+        try(Scanner scanner = new Scanner(file)){
+            while (scanner.hasNext()){
+                licenses.add(scanner.nextLine());
+            }
+        }catch (IOException ex){
+            System.out.println("Licenses file not found");
+            System.exit(0);
+        }
+
     }
 }
 
@@ -137,5 +152,10 @@ class License {
             return null;
         }
         return new String(Base64.decodeBase64(value));
+
+
+
     }
+
+
 }

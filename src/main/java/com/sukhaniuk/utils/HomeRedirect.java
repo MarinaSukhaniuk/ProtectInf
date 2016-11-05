@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class HomeRedirect extends HandlerInterceptorAdapter {
+    private LicensesArrayList licence = new LicensesArrayList();
     /**
      * This function Execute before spring method handler
      *
@@ -22,11 +23,11 @@ public class HomeRedirect extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        if(!LicensesArrayList.checkLicense()){
+        if (!licence.checkLicense()) {
             System.out.println("LICENSE ERROR");
             System.exit(0);
         }
-        if(!UsersStorage.checkRole(HomeController.ROLE)){
+        if (!UsersStorage.checkRole(HomeController.ROLE)) {
             response.sendError(999);
             return false;
         }
