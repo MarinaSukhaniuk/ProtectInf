@@ -42,6 +42,10 @@ public class LoginController extends GlobalController {
         String password = request.getParameter("passwordes");
         System.out.println("Password is " + password);
         //check of password. If not null
+        if (UsersStorage.getTries() > 3) {
+            response.sendError(808);
+            return;
+        }
         if (email != null || password != null) {
             //Check of password. If the length is ok
             if (Validation.checkpassword(password)) {
@@ -56,15 +60,15 @@ public class LoginController extends GlobalController {
                     request.getSession().setAttribute("password", password);
                     request.getSession().setAttribute("email", email);
                     //if user is admin
-                    if(user.getRole().getPermission() == 7){
+                    if (user.getRole().getPermission() == 7) {
                         response.sendRedirect("/admin/index.htm");
-                    }
-                    else response.sendRedirect("/index.htm");
+                    } else response.sendRedirect("/index.htm");
                     //Check of users. If users doesn`t exist in db
                 } else {
                     Alert alert = new Alert("danger", "Authorization failed", "Your password or login are wrong");
                     request.getSession().setAttribute("alert", alert);
                     response.sendRedirect("/login.htm");
+                    UsersStorage.setTries();
                     return;
                 }
                 //Check of password. If length is not ok
@@ -72,6 +76,7 @@ public class LoginController extends GlobalController {
                 Alert alert = new Alert("danger", "Authorization failed", "Password is too short");
                 request.getSession().setAttribute("alert", alert);
                 response.sendRedirect("/login.htm");
+                UsersStorage.setTries();
                 return;
             }
             //Check of password. If length is null
@@ -80,6 +85,7 @@ public class LoginController extends GlobalController {
             request.getSession().setAttribute("alert", alert);
             response.sendRedirect("/login.htm");
             System.out.println("NULL pass");
+            UsersStorage.setTries();
             return;
         }
         //response.sendRedirect("/index.htm");
@@ -93,6 +99,7 @@ public class LoginController extends GlobalController {
             usersStorage.logout(request);
         return "redirect:/index.htm";
     }
+
     @RequestMapping(value = "admin/logout")
     public String adminlogout(ModelMap map, HttpServletRequest request) throws IOException, JSONException, SQLException {
         System.out.println("---------logout");

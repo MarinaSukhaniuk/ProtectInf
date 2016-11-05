@@ -28,13 +28,7 @@
             <div class="grid_4  ">
                 <h3>View list of users<span class="label label-default"></span></h3>
                 <hr>
-                <div class="form-group">
-                    <form action="/admin/createuser.htm" method="POST">
-                        <input type="email" class="form-control" id="username" name="username"
-                               placeholder="username" required>
-                        <input class="form-control btn" type="submit" value="add user">
-                    </form>
-                </div>
+
                 <form class="myFormlist" action="/admin/listUsers.htm" method="GET">
 
                     <div class="panel panel-default">
@@ -96,6 +90,16 @@
                         </div>
                     </div>
                 </form>
+                <div class="form-group">
+                    <p>Add User</p>
+                    <div class="grid-4">
+                    <form action="/admin/createuser.htm" method="POST">
+                        <input type="email" class="form-control col-lg-3" id="username" name="username"
+                               placeholder="username" required><span class="input-group-addon" id="basic-addon2">@example.com</span>
+                        <input class="form-control btn" type="submit" value="add user">
+                    </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

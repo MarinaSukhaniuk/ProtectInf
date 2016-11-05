@@ -26,27 +26,25 @@ public class database {
 
     @Test
     public void checkLogin() {
-        boolean result = SelectCommand.checkUser("ADMIN", "827ccb0eea8a706c4c34a16891f84e7b");
+        boolean result = SelectCommand.checkUser("admin@gmail.com", "12345");
         assertTrue(result);
     }
 
     @Test
     public void insertTest() {
-
     }
 
     @Test
     public void selectTest() {
-
     }
 
     @Test
     public void updateTest() {
-
     }
 
     @Test
     public void outMouseElem() {
+
         System.out.println(java.awt.MouseInfo.getNumberOfButtons());
     }
 

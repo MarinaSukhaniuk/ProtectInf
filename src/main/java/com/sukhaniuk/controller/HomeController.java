@@ -44,7 +44,7 @@ public class HomeController extends GlobalController {
         UsersStorage storage = (UsersStorage) request.getSession().getAttribute("storage");
         if (oldPassword.equals(storage.getUser().getPassword())
                 && confNewPassword.equals(newPassword)
-                && newPassword.toLowerCase().matches("^[а-я]+")) {
+                && !newPassword.toLowerCase().matches("^[а-я]+")) {
             SelectCommand.UpdatePassword(newPassword, request.getSession().getAttribute("email").toString());
             storage.getUser().setPassword(newPassword);
             Alert alert = new Alert("success", "Changing of password succeed", "Password is changed");

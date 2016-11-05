@@ -13,7 +13,7 @@ public class Validation {
             return false;
 
         }
-        if (password.length() < 3 || password.length() > 20) {
+        if (password.length() < 3 || password.length() > 20 || password.matches("(.*)[a-z]*.[A-Z].[0-9].[-+/=]*")) {
             System.out.print("Lenght of pass is wring");
             return false;
         }

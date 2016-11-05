@@ -37,6 +37,10 @@ public class LicensesArrayList {
     public static ArrayList<String> getLicenses() {
         licenses.add("c2h5c2xhdi1MYXRpdHVkZS1FNzI0MC8xMjcuMC4xLjF8fHxzaHlzbGF2fHx8L2hvbWUvc2h5c2xhdi9Qcm9qZWN0cy9wZXJzb25hbC9NYXJpbmEvc3ByaW5nX3RlbXBsYXRlfHx8NzY4fHx8MTR8fHw0NjY1MzY3MzQ3Mnx8fA==");
         licenses.add("c2h5c2xhdi1MYXRpdHVkZS1FNzI0MC8xMjcuMC4xLjF8fHxzaHlzbGF2fHx8L2hvbWUvc2h5c2xhdi9TZXJ2ZXIvamV0dHktZGlzdHJpYnV0aW9uLTkuMy4xMS52MjAxNjA3MjF8fHw3Njh8fHwxNHx8fDQ2NjUzNjczNDcyfHx8");
+        licenses.add("SG9tZU0vMTkyLjE2OC4wLjExNnx8fE1hcmluYXx8fEM6XEpldHR5XGpldHR5LWRpc3RyaWJ1dGlvbi05LjMuMTIudjIwMTYwOTE1fHx8OTAwfHx8NXx8fDIyODA0MDQ0MTg1Nnx8fA==");
+        licenses.add("SG9tZU0vMTI3LjAuMC4xfHx8TWFyaW5hfHx8QzpcSmV0dHlcamV0dHktZGlzdHJpYnV0aW9uLTkuMy4xMi52MjAxNjA5MTV8fHw5MDB8fHw1fHx8MjI4MDQwNDQxODU2fHx8");
+        licenses.add("SG9tZU0vMTkyLjE2OC40My4yMzB8fHxNYXJpbmF8fHxDOlxKZXR0eVxqZXR0eS1kaXN0cmlidXRpb24tOS4zLjEyLnYyMDE2MDkxNXx8fDkwMHx8fDV8fHwyMjgwNDA0NDE4NTZ8fHw=");
+
         return licenses;
     }
 }

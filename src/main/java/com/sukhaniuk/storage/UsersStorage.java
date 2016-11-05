@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public class UsersStorage {
     private User user;
     private static int permission = 1;
+    public static int tries = 0;
 
     public UsersStorage(User user) {
         this.user = user;
@@ -68,5 +69,13 @@ public class UsersStorage {
 
     public static int getPermission() {
         return permission;
+    }
+
+    public static int getTries() {
+        return tries;
+    }
+
+    public static void setTries() {
+        tries++;
     }
 }
