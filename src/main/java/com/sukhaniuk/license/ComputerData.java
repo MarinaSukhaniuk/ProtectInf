@@ -34,12 +34,15 @@ public class ComputerData {
     public static File[] getRootsFolder() {
         return fsv.getRoots();
     }
+
     public static File[] getRootsList() {
         return File.listRoots();
     }
+
     public static int getMouseButtonsCount() {
         return java.awt.MouseInfo.getNumberOfButtons();
     }
+
     public static ArrayList<DriverInfo> getDriverInfo() {
         ArrayList<DriverInfo> list = new ArrayList();
         File[] f = getRootsList();
